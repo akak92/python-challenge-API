@@ -33,7 +33,7 @@ def characters_get_all():
     return response
 
 @character_bp.route('/get/<int:id>', methods=['GET'])
-def get(id):
+def get_character(id):
     try:
         session = current_app.Session()
         character = session.query(Character).filter_by(id=id).first()
@@ -63,21 +63,28 @@ def get(id):
     return response
 
 @character_bp.route('/add', methods=['POST'])
-def add():
+def add_character():
     try:
         result = request.json
         new_character_data = CharacterData(**result)
 
         new_character = Character(**new_character_data.model_dump())
 
-        session = current_app.Session()
+        character = session.query(Character).filter_by(id=new_character.id).first()
 
-        session.add(new_character)
-        session.commit()
+        if character is None:
+            session = current_app.Session()
 
-        message = "Character agregado exitosamente"
-        status = 200
-        data = new_character.serialize
+            session.add(new_character)
+            session.commit()
+
+            message = "Character agregado exitosamente"
+            status = 200
+            data = new_character.serialize
+        else:
+            message = "Character ya existe. No se puede agregar"
+            status = 400
+            data = None
 
     except Exception as e:
         message = f"Ha ocurrido un error {str(e)}"
@@ -91,4 +98,29 @@ def add():
         'data' : data
     }, status
 
+    return response
+
+@character_bp.route('/delete/<int:id>', methods=['DELETE'])
+def delete_character(id):
+    try:
+        session = current_app.Session()
+        character = session.query(Character).filter_by(id=id).first()
+
+        if character is not None:
+            session.delete(character)
+            session.commit()
+            message = f"Character con id: {str(id)} eliminado correctamente."
+            status = 200
+        else:
+            message = f"Character con id: {str(id)} no existe."
+            status = 400
+        
+    except Exception as e:
+        message = f"Ha ocurrido un error. {str(e)}"
+        status = 500
+    finally:
+        session.close()
+    response = {
+        'message' : message
+    }, status
     return response
