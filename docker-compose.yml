@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  api:
+    build:
+      context: ./Services/api-service
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - 5000:5000
+    command: python run.py
