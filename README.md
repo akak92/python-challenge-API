@@ -61,6 +61,10 @@ Como método de persistencia se utiliza una base de datos SQLite, llamada `chara
 
 Se ha utilizado `Docker-Compose` como medio de virtualización de la API (servicio api), facilitando así su mantenimiento y futura escalabilidad, mejorando de esta manera el ciclo de vida del aplicativo.
 
+A continuación se adjunta un diagrama que acompaña lo descrito previamente:
+
+![Diagrama de solución](docs/diagrama.png)
+
 Todos los endpoints cuentan con el prefijo: `/character`
 Los endpoints disponibles en la API se detallan a continuación:
 
