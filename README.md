@@ -114,3 +114,9 @@ docker exec -it python-challenge-api-api-1 pytest /app/api/tests/test_character.
 
 Puede que el nombre del contenedor cambie (en algunos sistemas el nombre del contenedor utiliza `_` en vez de `-`). 
 Consulte el nombre del contenedor del servicio api utilizando el comando `docker ps`
+
+### Futuras mejoras para próximas versiones
+
+Utilizar un sistema de persistencia de datos más robusto, por ejemplo `MySQL` (posiblemente en un nuevo servicio).
+
+Utilizar librería `flask-sqlalchemy` para mejor integración de ORM.
