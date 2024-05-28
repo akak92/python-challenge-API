@@ -2,6 +2,18 @@ from sqlalchemy import Column, Integer, String
 from pydantic import BaseModel
 from sqlalchemy.ext.declarative import declarative_base
 
+#
+#   Pedro Díaz | 28-05-2023
+#       models.py
+#           clase Character:
+#           Utilizada para interacciones ORM.
+#           propiedad serialize() para retornar objetos en formato JSON
+#
+#           clase CharacterData:
+#           Modelo simple para validaciones al crear Character
+#           utilizando pydantic.
+#
+
 Base = declarative_base()
 
 class Character(Base):

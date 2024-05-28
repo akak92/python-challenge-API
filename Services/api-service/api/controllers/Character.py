@@ -1,6 +1,18 @@
 from flask import Blueprint, request, current_app
 from api.models import Character, CharacterData
 
+#
+#   Pedro Díaz | 28-05-2023
+#   Character.py
+#       Defino endpoints que cumplen ejercicio
+#
+#   [GET]   /getAll => Retorna todos los Characters.
+#   [GET]   /get/{id} => Retorna Character filtrado por id proporcionado.
+#   [POST]  /add => Agrego Character nuevo.
+#   [DELETE] /delete/{id} => Elimino Character filtrado por id proporcionado.
+#
+#
+
 character_bp = Blueprint('character_bp', __name__)
 
 @character_bp.route('/getAll', methods=['GET'])
