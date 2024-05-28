@@ -1,5 +1,5 @@
 from api import create_app
-
+import os
 #
 #   Pedro Díaz | 28-05-2023
 #
@@ -13,4 +13,6 @@ from api import create_app
 app = create_app()
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    API_HOST = os.getenv('API_HOST')
+    API_PORT = os.getenv('API_PORT')
+    app.run(host=API_HOST, port=API_PORT)
