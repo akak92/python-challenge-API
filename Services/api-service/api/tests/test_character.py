@@ -1,6 +1,5 @@
 
 #
-#
 #   Pedro Díaz | 28-05-2023
 #       Pruebas unitarias para verificar el funcionamiento
 #       de los endpoints de Character.
