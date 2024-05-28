@@ -77,6 +77,16 @@ Los endpoints disponibles en la API se detallan a continuación:
 
 `/delete/{id} [DELETE]` : Elimina el Character asociado al id proporcionado.
 
+## Documentación API mediante Swagger
+
+Una vez iniciado el contenedor, es posible acceder a la documentación de los endpoints utilizando `swagger`.
+Para acceder, abra un navegador y coloque la siguiente URL:
+```
+http://localhost:5000/swagger
+```
+
+Allí podrá visualizar una breve descripción de los endpoints y también probarlos.
+
 ## Utilización con POSTman
 
 En el repositorio, existe una colección almacenada llamada `Characters - API.postman_collection.json` en la que se encuentran definidos los endpoints para realizar pruebas.
