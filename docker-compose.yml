@@ -1,5 +1,9 @@
 version: '3'
 
+volumes:
+  characters-db:
+
+
 services:
   api:
     build:
@@ -12,4 +16,6 @@ services:
       DB_NAME : ${DB_NAME}
     ports:
       - 5000:${API_PORT}
+    volumes:
+      - characters-db:/app/${DB_NAME}
     command: python run.py

@@ -5,11 +5,6 @@
 #       de los endpoints de Character.
 #
 
-#   TEST: getAll. Esperamos 200
-def test_getAll_characters(client):
-    response = client.get('/character/getAll')
-    assert response.status_code == 200
-
 #   TEST: Agregar Char. Esperamos 200
 def test_add_character(client):
     character_data = {
@@ -27,6 +22,11 @@ def test_add_character(client):
 
     assert response.status_code == 200
 
+#   TEST: getAll. Esperamos 200
+def test_getAll_characters(client):
+    response = client.get('/character/getAll')
+    assert response.status_code == 200
+
 #   TEST: get char. Esperamos 200
 def test_get_character(client):
     character_id = 1
@@ -41,7 +41,7 @@ def test_delete_character(client):
 
     assert response.status_code == 200
 
-#TEST: get char (invalid). Esperamos 404
+#TEST: get char (invalid id). Esperamos 404
 def test_get_invalid_character(client):
 
     invalid_character_id = 9999
