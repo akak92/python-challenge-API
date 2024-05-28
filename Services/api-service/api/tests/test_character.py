@@ -8,14 +8,7 @@
 
 #   TEST: getAll. Esperamos 200
 def test_getAll_characters(client):
-    response = client.get('/getAll')
-    assert response.status_code == 200
-
-#   TEST: get. Esperamos 200
-def test_get_character(client):
-    character_id = 1
-    response = client.get(f'/get/{character_id}')
-
+    response = client.get('/character/getAll')
     assert response.status_code == 200
 
 #   TEST: Agregar Char. Esperamos 200
@@ -28,17 +21,24 @@ def test_add_character(client):
         "hair_color": "blond",
         "skin_color": "fair",
         "eye_color": "blue",
-        "birth_year": "19BBY"
+        "birth_year": "1982"
     }
 
-    response = client.post('/add', json=character_data)
+    response = client.post('/character/add', json=character_data)
+
+    assert response.status_code == 200
+
+#   TEST: get. Esperamos 200
+def test_get_character(client):
+    character_id = 1
+    response = client.get(f'/character/get/{character_id}')
 
     assert response.status_code == 200
 
 #TEST: delete char. Esperamos 200
 def test_delete_character(client):
     character_id = 1
-    response = client.delete(f'/delete/{character_id}')
+    response = client.delete(f'/character/delete/{character_id}')
 
     assert response.status_code == 200
 
@@ -46,7 +46,7 @@ def test_delete_character(client):
 def test_get_invalid_character(client):
 
     invalid_character_id = 9999
-    response = client.get(f'/get/{invalid_character_id}')
+    response = client.get(f'/character/get/{invalid_character_id}')
 
     assert response.status_code == 404
 
@@ -60,7 +60,7 @@ def test_add_existing_character(client):
         "hair_color": "blond",
         "skin_color": "fair",
         "eye_color": "blue",
-        "birth_year": "19BBY"
+        "birth_year": "1982"
     }
 
     response = client.post('/add', json=existing_character_data)
@@ -69,7 +69,7 @@ def test_add_existing_character(client):
 #TEST: Borrar char que no existe. Esperamos 400
 def test_delete_nonexistent_character(client):
     nonexistent_character_id = 9999
-    response = client.delete(f'/delete/{nonexistent_character_id}')
+    response = client.delete(f'/character/delete/{nonexistent_character_id}')
 
     # Verificar que se recibe un código de estado 400 y el mensaje adecuado
     assert response.status_code == 400

@@ -21,7 +21,7 @@ def characters_get_all():
         session = current_app.Session()
         characters = session.query(Character).all()
 
-        if characters is not []:
+        if characters != []:
             message = "Characters obtenidos exitosamente."
             data = [character.serialize for character in characters]
             status = 200
