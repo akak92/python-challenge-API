@@ -36,7 +36,7 @@ def characters_get_all():
 def get_character(id):
     try:
         session = current_app.Session()
-        character = session.query(Character).filter_by(id=id).first()
+        character = session.query(Character).get(id)
 
         if character is not None:
             data = character.serialize
@@ -65,15 +65,15 @@ def get_character(id):
 @character_bp.route('/add', methods=['POST'])
 def add_character():
     try:
+        session = current_app.Session()
         result = request.json
         new_character_data = CharacterData(**result)
 
         new_character = Character(**new_character_data.model_dump())
 
-        character = session.query(Character).filter_by(id=new_character.id).first()
+        character = session.query(Character).get(new_character.id)
 
         if character is None:
-            session = current_app.Session()
 
             session.add(new_character)
             session.commit()
@@ -87,7 +87,7 @@ def add_character():
             data = None
 
     except Exception as e:
-        message = f"Ha ocurrido un error {str(e)}"
+        message = f"Ha ocurrido un error. {str(e)}"
         status = 500
         data = None
     finally:
@@ -104,7 +104,7 @@ def add_character():
 def delete_character(id):
     try:
         session = current_app.Session()
-        character = session.query(Character).filter_by(id=id).first()
+        character = session.query(Character).get(id)
 
         if character is not None:
             session.delete(character)

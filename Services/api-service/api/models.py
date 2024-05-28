@@ -30,6 +30,7 @@ class Character(Base):
         }
 
 class CharacterData(BaseModel):
+    id : int
     name : str
     height : int
     mass : int
