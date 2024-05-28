@@ -1,9 +1,9 @@
 {
     "swagger": "2.0",
     "info": {
-      "description": "API para gestionar Characters",
+      "description": "Python Challenge - API Characters",
       "version": "1.0.0",
-      "title": "Character API",
+      "title": "Python Challenge - API Characters",
       "contact": {
         "email": "pfdiaz2015@gmail.com"
       }
