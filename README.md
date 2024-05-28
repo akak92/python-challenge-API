@@ -72,3 +72,45 @@ Los endpoints disponibles en la API se detallan a continuación:
 
 `/delete/{id} [DELETE]` : Elimina el Character asociado al id proporcionado.
 
+## Utilización con POSTman
+
+En el repositorio, existe una colección almacenada llamada `Characters - API.postman_collection.json` en la que se encuentran definidos los endpoints para realizar pruebas.
+
+Ingrese a POSTMan e importe la colección. Deberá cambiar el valor de una serie de variables definidas para la colección:
+
+```
+    HOST : Puede ser localhost o su dirección IP local
+    ID : id con el que desea realizar pruebas
+```
+En caso de no poder utilizar localhost como `HOST`, a continuación mencionamos una serie de comandos para obtener su dirección IP local.
+
+#### Obtener Dirección IP local
+
+#### Windows
+
+Abra PowerShell, ejecute el siguiente comando:
+```
+Get-NetIPAddress -AddressFamily IPv4 -InterfaceAlias "Wi-Fi" | Select-Object -ExpandProperty IPAddress
+```
+En caso de estar conectado por cable (Ethernet), reemplace `"Wi-Fi"` por `"Ethernet"`.
+
+#### Linux
+
+Abra una shell, ejecute el siguiente comando:
+```
+ip addr show wlan0 | grep inet
+```
+En caso de estar conectado por cable (Ethernet), reemplace `wlan0` por `eth0`.
+
+## Pruebas Unitarias
+
+Las pruebas unitarias se han definido para el `servicio api` dentro de la carpeta `tests` utilizando la librería `pytest`.
+
+Para ejecutar las pruebas, abrir una shell y ejecutar el comando:
+```
+docker exec -it python-challenge-api-api-1 pytest /app/api/tests/test_character.py
+```
+`Nota: ` También es posible realizar las pruebas con los contenedores apagados.
+
+Puede que el nombre del contenedor cambie (en algunos sistemas el nombre del contenedor utiliza `_` en vez de `-`). 
+Consulte el nombre del contenedor del servicio api utilizando el comando `docker ps`
