@@ -27,7 +27,7 @@ def test_add_character(client):
 
     assert response.status_code == 200
 
-#   TEST: get. Esperamos 200
+#   TEST: get char. Esperamos 200
 def test_get_character(client):
     character_id = 1
     response = client.get(f'/character/get/{character_id}')
@@ -41,7 +41,7 @@ def test_delete_character(client):
 
     assert response.status_code == 200
 
-#TEST: get invalid. Esperamos 404
+#TEST: get char (invalid). Esperamos 404
 def test_get_invalid_character(client):
 
     invalid_character_id = 9999
@@ -70,5 +70,4 @@ def test_delete_nonexistent_character(client):
     nonexistent_character_id = 9999
     response = client.delete(f'/character/delete/{nonexistent_character_id}')
 
-    # Verificar que se recibe un código de estado 400 y el mensaje adecuado
     assert response.status_code == 400
