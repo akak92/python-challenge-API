@@ -9,6 +9,7 @@ services:
     environment:
       API_HOST : ${API_HOST}
       API_PORT : ${API_PORT}
+      DB_NAME : ${DB_NAME}
     ports:
       - 5000:${API_PORT}
     command: python run.py

@@ -1,6 +1,6 @@
-from flask import Blueprint, request, current_app
+from flask import Blueprint, request
 from api.models import Character, CharacterData
-
+from api import db
 #
 #   Pedro Díaz | 28-05-2023
 #   Character.py
@@ -18,8 +18,7 @@ character_bp = Blueprint('character_bp', __name__)
 @character_bp.route('/getAll', methods=['GET'])
 def characters_get_all():
     try:
-        session = current_app.Session()
-        characters = session.query(Character).all()
+        characters = Character.query.all()
 
         if characters != []:
             message = "Characters obtenidos exitosamente."
@@ -34,9 +33,7 @@ def characters_get_all():
         message = f"Ha ocurrido un error: {str(e)}"
         data = None
         status = 500
-    finally:
-        session.close()
-    
+
     response = {
         'message' : message,
         'data' : data,
@@ -47,8 +44,7 @@ def characters_get_all():
 @character_bp.route('/get/<int:id>', methods=['GET'])
 def get_character(id):
     try:
-        session = current_app.Session()
-        character = session.query(Character).get(id)
+        character = Character.query.filter_by(id=id).first()
 
         if character is not None:
             data = character.serialize
@@ -59,13 +55,10 @@ def get_character(id):
             message = f"No se encontrado Character con id: {str(id)}"
             status = 404
 
-
     except Exception as e:
         data = None
         message = f"Ha ocurrido un error: {str(e)}"
         status = 500
-    finally:
-        session.close()
 
     response = {
         'message' : message,
@@ -77,19 +70,15 @@ def get_character(id):
 @character_bp.route('/add', methods=['POST'])
 def add_character():
     try:
-        session = current_app.Session()
         result = request.json
         new_character_data = CharacterData(**result)
-
         new_character = Character(**new_character_data.model_dump())
 
-        character = session.query(Character).get(new_character.id)
-
+        # Comprobación de existencia del character
+        character = Character.query.filter_by(id=new_character.id).first()
         if character is None:
-
-            session.add(new_character)
-            session.commit()
-
+            db.session.add(new_character)
+            db.session.commit()
             message = "Character agregado exitosamente"
             status = 200
             data = new_character.serialize
@@ -102,12 +91,10 @@ def add_character():
         message = f"Ha ocurrido un error. {str(e)}"
         status = 500
         data = None
-    finally:
-        session.close()
 
     response = {
-        'message' : message,
-        'data' : data
+        'message': message,
+        'data': data
     }, status
 
     return response
@@ -115,12 +102,11 @@ def add_character():
 @character_bp.route('/delete/<int:id>', methods=['DELETE'])
 def delete_character(id):
     try:
-        session = current_app.Session()
-        character = session.query(Character).get(id)
+        character = Character.query.filter_by(id=id).first()
 
         if character is not None:
-            session.delete(character)
-            session.commit()
+            Character.query.filter_by(id=id).delete()
+            db.session.commit()
             message = f"Character con id: {str(id)} eliminado correctamente."
             status = 200
         else:
@@ -130,9 +116,9 @@ def delete_character(id):
     except Exception as e:
         message = f"Ha ocurrido un error. {str(e)}"
         status = 500
-    finally:
-        session.close()
+
     response = {
         'message' : message
     }, status
+
     return response

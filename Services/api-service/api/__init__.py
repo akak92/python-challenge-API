@@ -1,10 +1,10 @@
 from flask import Flask
 import logging
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from api.models import Base, Character
 from flask_swagger_ui import get_swaggerui_blueprint
 from flask_cors import CORS
+from flask_sqlalchemy import SQLAlchemy
+
+import os
 
 #
 #   Pedro Díaz | 28-05-2023
@@ -20,6 +20,8 @@ from flask_cors import CORS
 #
 #
 
+db = SQLAlchemy()
+
 def create_app():
     try:
         logging.basicConfig(level=logging.INFO)
@@ -27,12 +29,16 @@ def create_app():
         app = Flask(__name__)
         CORS(app)
 
-        engine = create_engine('sqlite:///characters.db', echo=True)
-        Base.metadata.create_all(engine)
+        DB_NAME=os.getenv('DB_NAME', 'characters.db')
 
-        Session = sessionmaker(bind=engine)
+        app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
+        app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-        app.Session = Session
+        from api.models import Character
+        db.init_app(app)
+
+        with app.app_context():
+            db.create_all()
 
         SWAGGER_URL = '/swagger'
         API_URL = '/static/swagger.json'
