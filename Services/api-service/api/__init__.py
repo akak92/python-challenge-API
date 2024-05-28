@@ -15,6 +15,10 @@ from flask_cors import CORS
 #
 #           Si falla su creación, logueamos.
 #
+#       swagger:
+#           Implementamos flask-cors para permitir correcto funcionamiento.
+#
+#
 
 def create_app():
     try:
