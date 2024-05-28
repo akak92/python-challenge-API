@@ -24,7 +24,6 @@ def create_app():
         Base.metadata.create_all(engine)
 
         Session = sessionmaker(bind=engine)
-        
 
         app.Session = Session
 
@@ -32,5 +31,5 @@ def create_app():
         app.register_blueprint(character_bp, url_prefix='/character')
 
     except Exception as e:
-        logging.info(f"Sucedió una excepción al crear la aplicación. {str(e)}")
+        logger.info(f"Sucedió una excepción al crear la aplicación. {str(e)}")
     return app
