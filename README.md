@@ -133,5 +133,3 @@ Consulte el nombre del contenedor del servicio api utilizando el comando `docker
 ### Futuras mejoras para próximas versiones
 
 Utilizar un sistema de persistencia de datos más robusto, por ejemplo `MySQL` (posiblemente en un nuevo servicio).
-
-Utilizar librería `flask-sqlalchemy` para mejor integración de ORM.
